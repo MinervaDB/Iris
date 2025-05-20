@@ -23,10 +23,11 @@ Retention Manager: Enforces differential retention policies
 Monitoring Service: Tracks replication metrics and health
 Administration API: RESTful API for configuration and management
 
-Installation
-Prerequisites
+### Installation
 
-MongoDB 4.2+ (source and target)
-Python 3.8+
-pip (Python package manager)
-Linux-based system (recommended)
+**** Prerequisites
+
+* MongoDB 4.2+ (source and target)
+* Python 3.8+
+* pip (Python package manager)
+* Linux-based system (recommended)
