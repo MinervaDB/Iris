@@ -14,14 +14,14 @@ Alert System: Configurable alerts for replication lag, failures, or other issues
 
 MinervaDB Iris consists of the following components:
 
-Replication Controller: Core component managing the replication process
-Change Stream Listener: Monitors the source database for changes
-Operation Filter: Filters out delete operations
-Operation Transformer: Transforms operations as needed before applying to target
-Target Applier: Applies filtered operations to the target database
-Retention Manager: Enforces differential retention policies
-Monitoring Service: Tracks replication metrics and health
-Administration API: RESTful API for configuration and management
+* Replication Controller: Core component managing the replication process
+* Change Stream Listener: Monitors the source database for changes
+* Operation Filter: Filters out delete operations
+* Operation Transformer: Transforms operations as needed before applying to target
+* Target Applier: Applies filtered operations to the target database
+* Retention Manager: Enforces differential retention policies
+* Monitoring Service: Tracks replication metrics and health
+* Administration API: RESTful API for configuration and management
 
 ### Installation
 
