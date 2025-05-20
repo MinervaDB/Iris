@@ -25,7 +25,7 @@ Administration API: RESTful API for configuration and management
 
 ### Installation
 
-**** Prerequisites
+ #### Prerequisites
 
 * MongoDB 4.2+ (source and target)
 * Python 3.8+
