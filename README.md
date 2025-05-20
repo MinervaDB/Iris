@@ -1,14 +1,16 @@
 # Iris
 MinervaDB Iris is a specialized toolkit for MongoDB replication that allows asymmetric delete operations between source and target databases. This enables organizations to maintain different retention policies across their database infrastructure - specifically designed for environments requiring 6-month retention at source and 18-month retention at target.
-Key Features
 
-Selective Delete Propagation: Prevents delete operations from propagating from source to target
-Differential Retention Policies: Supports 6-month retention at source and 18-month retention at target
-Change Stream Monitoring: Uses MongoDB's change streams to capture operations in real-time
-Automated Purging: Implements automated purging based on configurable retention policies
-Audit Trail: Maintains comprehensive logs of all replication activities
-Monitoring Dashboard: Web-based interface for monitoring replication status and health
-Alert System: Configurable alerts for replication lag, failures, or other issues
+
+## Key Features
+
+* Selective Delete Propagation: Prevents delete operations from propagating from source to target
+* Differential Retention Policies: Supports 6-month retention at source and 18-month retention at target
+* Change Stream Monitoring: Uses MongoDB's change streams to capture operations in real-time
+* Automated Purging: Implements automated purging based on configurable retention policies
+* Audit Trail: Maintains comprehensive logs of all replication activities
+* Monitoring Dashboard: Web-based interface for monitoring replication status and health
+* Alert System: Configurable alerts for replication lag, failures, or other issues
 
 ## Architecture
 
