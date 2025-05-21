@@ -38,6 +38,7 @@ MinervaDB Iris consists of the following components:
 ### Setup
 
 ```
+
 # Clone the repository
 git clone https://github.com/minervadb/iris.git
 cd iris
