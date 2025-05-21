@@ -285,3 +285,85 @@ mongo $TARGET_URI
 4. Verify network connectivity between the Iris server and both MongoDB instances
 
 #### For additional assistance, contact support@minervadb.com.
+
+
+
+# Administration API
+The MinervaDB Iris toolkit also includes a RESTful API for administration and configuration. This allows for programmatic control of the replication process.
+
+## API Endpoints
+
+* GET /api/status: Get overall replication status
+* GET /api/collections: List all collections being replicated
+* GET /api/collections/{name}: Get details for a specific collection
+* POST /api/collections: Add a new collection to replication
+* DELETE /api/collections/{name}: Remove a collection from replication
+* GET /api/metrics: Get replication metrics
+* POST /api/config: Update configuration
+
+## Best Practices
+
+### 1. Database Security:
+
+* Use TLS/SSL for all MongoDB connections
+* Implement authentication for both source and target databases
+* Create dedicated users with appropriate privileges
+
+
+### 2. Performance Optimization:
+
+* Monitor replication lag and adjust batch sizes accordingly
+* Index fields used in retention policies
+* Consider hardware requirements for high-throughput scenarios
+
+
+### 3. Monitoring:
+
+* Set up alerts for replication errors or excessive lag
+* Monitor disk space on the target database
+* Review logs regularly
+
+
+### 4. Backup:
+
+* Implement regular backups of both source and target databases
+* Test restoration procedures periodically
+
+
+
+# Troubleshooting
+
+## Common Issues
+
+### 1. Replication Lag:
+
+* Check network connectivity between source and target
+* Increase batch size for higher throughput
+* Verify source server is not overloaded
+
+
+### 2. Authentication Failures:
+
+* Verify credentials in configuration
+* Check that users have appropriate privileges
+* Ensure authentication database is correctly specified
+
+
+### 3. Data Inconsistency:
+
+* Check for errors in operation transformation
+* Verify indexes match between source and target
+* Use validation tools to compare databases
+
+
+
+## Support
+For customization, enhancements, or support, please contact:
+
+* Email: support@minervadb.com
+* Website: https://minervadb.com
+
+### License
+
+MinervaDB Iris is licensed under GNU General Public License v3.0.
+Copyright © 2010-2025. All Rights Reserved by MinervaDB®.
