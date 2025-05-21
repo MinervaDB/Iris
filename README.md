@@ -105,3 +105,183 @@ monitoring:
 
 ```
 
+Make sure to:
+
+* Specify the correct MongoDB connection URIs
+* List all collections you want to replicate
+* Define timestamp fields for each collection (needed for retention policies)
+* Set appropriate retention periods (in days)
+
+### 3. Running the Application
+
+Start MinervaDB Iris:
+
+``` ./iris.py --config config/config.yaml  ```
+
+You should see the MinervaDB Iris banner and log messages indicating that replication has started.
+
+For production use, you may want to set it up as a service:
+
+```
+
+# Example systemd service file (save as /etc/systemd/system/minervadb-iris.service)
+[Unit]
+Description=MinervaDB Iris MongoDB Replication Service
+After=network.target
+
+[Service]
+User=mongodb
+WorkingDirectory=/opt/minervadb-iris
+ExecStart=/opt/minervadb-iris/iris.py --config /opt/minervadb-iris/config/config.yaml
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+
+```
+
+Then activate the service:
+
+```
+sudo systemctl enable minervadb-iris
+sudo systemctl start minervadb-iris
+
+```
+
+### 4. Monitoring
+
+Access the monitoring dashboard by opening a web browser and navigating to:
+
+```
+http://your-server:8080/
+```
+
+This dashboard provides:
+
+* Real-time replication status
+* Operation counts by collection and type
+* Error logs and alerts
+* Performance metrics
+
+### 5. Administration
+   
+You can manage MinervaDB Iris using the REST API:
+
+#### View Status
+
+```
+
+curl http://your-server:8080/api/status
+
+```
+
+#### Add a Collection
+
+```
+
+curl -X POST http://your-server:8080/api/collections \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "new_collection",
+    "indexes": [
+      {
+        "keys": {"created_at": 1},
+        "options": {"expireAfterSeconds": 15552000}
+      }
+    ]
+  }'
+
+```
+
+#### Remove a Collection
+
+```
+
+curl -X DELETE http://your-server:8080/api/collections/collection_name
+
+```
+
+### 6. Checking Replication Status
+
+To verify that replication is working properly:
+
+1. Insert a document into a source collection
+
+```
+db.orders.insertOne({
+  order_id: "ORD123456",
+  customer: "Example Corp",
+  items: [...],
+  timestamp: new Date()
+})
+
+```
+
+2. Verify it appears in the target database
+
+```
+db.orders.findOne({order_id: "ORD123456"})
+
+```
+
+3. Test delete filtering by removing from source
+
+```
+db.orders.deleteOne({order_id: "ORD123456"})
+
+```
+
+4. Verify the document still exists in target
+
+```
+db.orders.findOne({order_id: "ORD123456"})
+
+```
+
+## 7. Retention Testing
+
+The retention policies operate on a schedule (daily by default). To test:
+
+1. Insert documents with timestamps in the past
+
+```
+// In source database
+db.orders.insertOne({
+  order_id: "OLD-ORD-123",
+  timestamp: new Date(Date.now() - (200 * 24 * 60 * 60 * 1000))  // 200 days old
+})
+
+```
+
+2. Wait for the next retention cycle or trigger manually:
+
+```
+curl http://your-server:8080/api/retention/run
+
+```
+
+3. The document should be removed from source (> 180 days) but remain in target (< 540 days)
+
+## Troubleshooting
+
+If you encounter issues:
+
+1. Check logs:
+
+```
+tail -f iris.log
+
+```
+
+2. Verify MongoDB connectivity:
+
+```
+mongo $SOURCE_URI
+mongo $TARGET_URI
+
+```
+
+3. Ensure change streams are enabled (requires replica sets)
+4. Verify network connectivity between the Iris server and both MongoDB instances
+
+#### For additional assistance, contact support@minervadb.com.
