@@ -55,3 +55,53 @@ cp config/example.yaml config/config.yaml
 
 ```
 
+The main dependencies include:
+
+* pymongo (for MongoDB connectivity)
+* pyyaml (for configuration parsing)
+* Flask (for the admin API)
+
+### 2. Configuration
+Create your configuration file by copying the example:
+
+``` cp config/example.yaml config/config.yaml ```
+
+Then edit the configuration file to match your environment:
+
+```
+
+source:
+  uri: "mongodb://username:password@source-mongodb:27017"
+  database: "production"
+  auth_source: "admin"
+  retention_days: 180  # 6 months
+
+target:
+  uri: "mongodb://username:password@target-mongodb:27017"
+  database: "archive"
+  auth_source: "admin"
+  retention_days: 540  # 18 months
+
+replication:
+  collections:
+    - name: "orders"
+      indexes:
+        - keys: {"timestamp": 1}
+          options: {"expireAfterSeconds": 15552000}  # 180 days
+    - name: "transactions"
+      indexes:
+        - keys: {"created_at": 1}
+          options: {"expireAfterSeconds": 15552000}  # 180 days
+  
+  batch_size: 1000
+  max_lag_seconds: 300
+  exclude_operations: ["delete"]
+
+monitoring:
+  port: 8080
+  log_level: "info"
+  metrics_retention_days: 30
+  alert_email: "dba@example.com"
+
+```
+
