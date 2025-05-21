@@ -33,3 +33,24 @@ MinervaDB Iris consists of the following components:
 * Python 3.8+
 * pip (Python package manager)
 * Linux-based system (recommended)
+
+
+### Setup
+
+```
+# Clone the repository
+git clone https://github.com/minervadb/iris.git
+cd iris
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Configure the application
+cp config/example.yaml config/config.yaml
+# Edit config.yaml with your MongoDB connection details
+
+# Run the setup script
+./setup.sh
+
+```
+
